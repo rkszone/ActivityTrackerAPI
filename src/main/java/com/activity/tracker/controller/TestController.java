@@ -11,7 +11,7 @@ public class TestController {
 
     @GetMapping("/")
     public String getTodos() {
-        return "hello world of API";
+        return "hello world of API NEW";
     }
 }
 
