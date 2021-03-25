@@ -11,6 +11,7 @@
 .mtj.tmp/
 
 # Package Files #
+activity-tracker.iml
 target/*
 .idea/*
 *.jar
