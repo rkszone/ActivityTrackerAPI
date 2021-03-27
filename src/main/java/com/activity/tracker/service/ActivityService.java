@@ -3,8 +3,8 @@ package com.activity.tracker.service;
 import com.activity.tracker.entities.Activity;
 import com.activity.tracker.entities.Record;
 import com.activity.tracker.model.*;
-import com.activity.tracker.repository.IActivityDao;
-import com.activity.tracker.repository.IRecordDao;
+import com.activity.tracker.repository.IActivityRepository;
+import com.activity.tracker.repository.IRecordRepository;
 import com.activity.tracker.utils.CsvUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +25,10 @@ import java.util.stream.Collectors;
 public class ActivityService implements IActivityService {
 
     @Autowired
-    IRecordDao recordRepository;
+    IRecordRepository recordRepository;
 
     @Autowired
-    IActivityDao activityRepository;
+    IActivityRepository activityRepository;
     public List<FileUploadModel> fileUploadModels(MultipartFile[] files) throws Exception {
         List<FileUploadModel> fileUploadModels = new ArrayList<>();
         for (MultipartFile file : files) {

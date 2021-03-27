@@ -5,5 +5,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IRecordDao extends PagingAndSortingRepository<Record,Long> {
+public interface IRecordRepository extends PagingAndSortingRepository<Record,Long> {
 }
