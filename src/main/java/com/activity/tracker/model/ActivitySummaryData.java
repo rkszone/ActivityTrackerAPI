@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * ActivitySummaryData has all required fields of Activity Summary Data
+ */
 @Data
 @EqualsAndHashCode
 @ToString

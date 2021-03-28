@@ -12,6 +12,9 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Record has all the fields of Record Entity
+ */
 @Data
 @Entity
 @Table(name = "RECORD")

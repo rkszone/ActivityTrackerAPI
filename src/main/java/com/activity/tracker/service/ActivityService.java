@@ -2,6 +2,7 @@ package com.activity.tracker.service;
 
 import com.activity.tracker.entities.Activity;
 import com.activity.tracker.entities.Record;
+import com.activity.tracker.mapper.ActivityMapper;
 import com.activity.tracker.model.*;
 import com.activity.tracker.repository.IActivityRepository;
 import com.activity.tracker.repository.IRecordRepository;
@@ -19,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
- * Service class for rate
+ * Service class for activity
  */
 @Service
 @Slf4j
@@ -30,6 +31,12 @@ public class ActivityService implements IActivityService {
 
     @Autowired
     IActivityRepository activityRepository;
+
+    /**
+     * file Upload Models
+     * @param files csv file
+     * @return List of FileUploadModel
+     */
     public List<FileUploadModel> fileUploadModels(MultipartFile[] files) {
         List<FileUploadModel> fileUploadModels = new ArrayList<>();
         for (MultipartFile file : files) {
@@ -65,6 +72,12 @@ public class ActivityService implements IActivityService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get Activities
+     * @param pageNo start page
+     * @param pageSize numbers of page
+     * @return PageActivity
+     */
     public PageActivity getActivities(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo-1,pageSize);
         Page<Activity> activityPage = activityRepository.findAll(pageable);
@@ -84,7 +97,12 @@ public class ActivityService implements IActivityService {
         return pageActivity;
     }
 
-    public ActivitySummaryData geActivitySummaryData(long id) {
+    /**
+     * Get Activity Summary Data
+     * @param id activity id
+     * @return activity summary data
+     */
+    public ActivitySummaryData getActivitySummaryData(long id) {
         Optional<Activity> optionalActivity = activityRepository.findById(id);
         if(optionalActivity.isPresent()){
             ActivitySummaryData activitySummaryData = new ActivitySummaryData();
@@ -116,19 +134,23 @@ public class ActivityService implements IActivityService {
         }
     }
 
+    /**
+     * Delete activity by Id
+     * @param id activity Id
+     */
     @Override
     public void deleteById(Long id) {
         activityRepository.deleteById(id);
     }
 
+    /**
+     * Save activity with records
+     * @param objectList csv parsed data object
+     */
     private void persistRecords(List<Object> objectList) {
         Optional<Object> optionalActivity =objectList.stream().filter(object -> object instanceof ActivityModel).findFirst();
         if(optionalActivity.isPresent()){
-            Activity activityDao = new Activity();
-            activityDao.setName(((ActivityModel) optionalActivity.get()).getName());
-            activityDao.setActivityDef(((ActivityModel) optionalActivity.get()).getActivityDef());
-            activityDao.setActivityType(((ActivityModel) optionalActivity.get()).getActivityType());
-            activityDao.setStartTime(((ActivityModel) optionalActivity.get()).getStartTime());
+            Activity activityDao = ActivityMapper.getActivityDao(optionalActivity);
             activityDao = activityRepository.save(activityDao);
             objectList = objectList.stream().filter(obj -> !(obj instanceof ActivityModel)).collect(Collectors.toList());
             for(Object obj: objectList){

@@ -1,11 +1,11 @@
 #!/bin/sh
 
-#AZ_RESOURCE_GROUP=ActivityTracker
-#AZ_DATABASE_NAME=activitytracker2021
-#AZ_LOCATION=westeurope
-#AZ_MYSQL_USERNAME=activitytracker
-#AZ_MYSQL_PASSWORD=Activity*#2021
-#AZ_LOCAL_IP_ADDRESS=217.100.148.210
+az $AZ_RESOURCE_GROUP=ActivityTracker
+az $AZ_DATABASE_NAME=activitytracker2021
+az $AZ_LOCATION=westeurope
+az $AZ_MYSQL_USERNAME=activitytracker
+az $AZ_MYSQL_PASSWORD=Activity*#2021
+az $AZ_LOCAL_IP_ADDRESS=217.100.148.210
 
 echo "Creating cloud resources..."
 

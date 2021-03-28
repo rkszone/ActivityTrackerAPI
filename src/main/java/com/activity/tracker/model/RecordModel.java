@@ -7,6 +7,9 @@ import lombok.ToString;
 
 import java.util.Date;
 
+/**
+ * RecordModel has all required fields of Record Model
+ */
 @Data
 @EqualsAndHashCode
 @ToString

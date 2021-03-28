@@ -4,6 +4,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * FileUploadModel has all required fields of File Upload Model
+ */
 @Data
 @EqualsAndHashCode
 @ToString

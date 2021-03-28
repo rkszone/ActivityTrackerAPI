@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Activity has all required fields of Activity Entity
+ */
 @Data
 @Entity
 @Table(name = "ACTIVITY")

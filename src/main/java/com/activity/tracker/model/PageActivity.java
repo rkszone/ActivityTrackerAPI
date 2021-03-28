@@ -7,6 +7,9 @@ import lombok.ToString;
 
 import java.util.List;
 
+/**
+ * PageActivity has all required fields of Page Activity
+ */
 @Data
 @EqualsAndHashCode
 @ToString

@@ -17,8 +17,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * CsvUtil
+ */
 public final class CsvUtil {
 
+    /**
+     * Process CSV file
+     * @param file csv file
+     * @return List<Object>
+     * @throws IOException while processing csv file
+     */
     public static List<Object> processFile(MultipartFile file) throws IOException {
         List<Object> objectList = new ArrayList<>();
         BufferedReader fileReader = new BufferedReader(new

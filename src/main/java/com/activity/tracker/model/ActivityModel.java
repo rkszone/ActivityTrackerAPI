@@ -7,6 +7,9 @@ import lombok.ToString;
 
 import java.util.Date;
 
+/**
+ * ActivityModel has all required fields of Activity Model
+ */
 @Data
 @EqualsAndHashCode
 @ToString
