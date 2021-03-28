@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -29,7 +30,7 @@ public class ActivityService implements IActivityService {
 
     @Autowired
     IActivityRepository activityRepository;
-    public List<FileUploadModel> fileUploadModels(MultipartFile[] files) throws Exception {
+    public List<FileUploadModel> fileUploadModels(MultipartFile[] files) {
         List<FileUploadModel> fileUploadModels = new ArrayList<>();
         for (MultipartFile file : files) {
             try {
@@ -64,7 +65,7 @@ public class ActivityService implements IActivityService {
                 .collect(Collectors.toList());
     }
 
-    public PageActivity getActivities(int pageNo, int pageSize) throws Exception{
+    public PageActivity getActivities(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo-1,pageSize);
         Page<Activity> activityPage = activityRepository.findAll(pageable);
         PageActivity pageActivity = new PageActivity();
@@ -83,7 +84,7 @@ public class ActivityService implements IActivityService {
         return pageActivity;
     }
 
-    public ActivitySummaryData geActivitySummaryData(long id) throws Exception{
+    public ActivitySummaryData geActivitySummaryData(long id) {
         Optional<Activity> optionalActivity = activityRepository.findById(id);
         if(optionalActivity.isPresent()){
             ActivitySummaryData activitySummaryData = new ActivitySummaryData();
@@ -100,6 +101,11 @@ public class ActivityService implements IActivityService {
             activitySummaryData.setAvgCadence(optionalActivity.get().getRecordList().
                     parallelStream().mapToDouble(Record::getCadence).
                     average().orElse(Double.NaN));
+
+            long startTime = optionalActivity.get().getStartTime().getTime();
+            long endTime = Collections.max(optionalActivity.get().getRecordList(), Comparator.comparing(Record::getTime)).getTime().getTime();
+            activitySummaryData.setTotalDuration(TimeUnit.MILLISECONDS.toMinutes(endTime - startTime));
+
             activitySummaryData.setTotalDistance((long) optionalActivity.get().getRecordList().
                     parallelStream().mapToDouble(Record::getDistance).
                     sum());
@@ -110,7 +116,12 @@ public class ActivityService implements IActivityService {
         }
     }
 
-    private void persistRecords(List<Object> objectList) throws Exception{
+    @Override
+    public void deleteById(Long id) {
+        activityRepository.deleteById(id);
+    }
+
+    private void persistRecords(List<Object> objectList) {
         Optional<Object> optionalActivity =objectList.stream().filter(object -> object instanceof ActivityModel).findFirst();
         if(optionalActivity.isPresent()){
             Activity activityDao = new Activity();

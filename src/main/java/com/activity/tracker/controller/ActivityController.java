@@ -38,7 +38,8 @@ public class ActivityController {
         return activityService.geActivitySummaryData(id);
     }
 
-
-
-
+    @DeleteMapping("/activities/{id}")
+    public void deleteEmployee(@PathVariable Long id) {
+        activityService.deleteById(id);
+    }
 }

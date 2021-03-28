@@ -16,6 +16,9 @@ public class ActivitySummaryData {
     @JsonProperty("total_distance")
     private long totalDistance;
 
+    @JsonProperty("total_duration")
+    private long totalDuration;
+
     @JsonProperty("average_power")
     private double avgPower;
 

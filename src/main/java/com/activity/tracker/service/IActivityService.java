@@ -14,4 +14,6 @@ public interface IActivityService {
     PageActivity getActivities(int pageNo, int pageSize) throws Exception;
 
     ActivitySummaryData geActivitySummaryData(long id) throws Exception;
+
+    void deleteById(Long id);
 }

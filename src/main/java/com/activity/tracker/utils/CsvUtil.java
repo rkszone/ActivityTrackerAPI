@@ -10,6 +10,7 @@ import org.apache.commons.io.input.BOMInputStream;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.Map;
 
 public final class CsvUtil {
 
-    public static List<Object> processFile(MultipartFile file) throws Exception {
+    public static List<Object> processFile(MultipartFile file) throws IOException {
         List<Object> objectList = new ArrayList<>();
         BufferedReader fileReader = new BufferedReader(new
                 InputStreamReader(new BOMInputStream(file.getInputStream()), "UTF-8"));
@@ -27,7 +28,6 @@ public final class CsvUtil {
         Map<String, Integer> headerMap = csvParser.getHeaderMap();
         String type = "header";
         for (CSVRecord csvRecord : csvRecords) {
-            System.out.println(csvRecord.toString());
             boolean flag = true;
             if (headerMap.get("activty_def") != null && csvRecord.get(headerMap.get("activty_def")).equals("record_def")) {
                 headerMap.clear();
