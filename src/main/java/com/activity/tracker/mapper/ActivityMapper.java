@@ -12,7 +12,7 @@ public class ActivityMapper {
      * @param optionalActivity activity object
      * @return Activity Entity
      */
-    public static Activity getActivityDao(Optional<Object> optionalActivity) {
+    public static Activity getActivity(Optional<Object> optionalActivity) {
         Activity activityDao = new Activity();
         activityDao.setName(((ActivityModel) optionalActivity.get()).getName());
         activityDao.setActivityDef(((ActivityModel) optionalActivity.get()).getActivityDef());

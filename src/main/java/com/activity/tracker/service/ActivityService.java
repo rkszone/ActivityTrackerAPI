@@ -150,7 +150,7 @@ public class ActivityService implements IActivityService {
     private void persistRecords(List<Object> objectList) {
         Optional<Object> optionalActivity =objectList.stream().filter(object -> object instanceof ActivityModel).findFirst();
         if(optionalActivity.isPresent()){
-            Activity activityDao = ActivityMapper.getActivityDao(optionalActivity);
+            Activity activityDao = ActivityMapper.getActivity(optionalActivity);
             activityDao = activityRepository.save(activityDao);
             objectList = objectList.stream().filter(obj -> !(obj instanceof ActivityModel)).collect(Collectors.toList());
             for(Object obj: objectList){

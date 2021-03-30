@@ -15,13 +15,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = {"/**"},method = {RequestMethod.GET, RequestMethod.POST})
 public class BaseController {
 
+    public BaseController() {
+    }
+
     @RequestMapping(
             value = {"/**"},
             produces = {"application/json"}
     )
     @GetMapping
     @PostMapping
-    public String handleGetAll() {
+    public String handleGetAll() throws TrackerException{
         throw new TrackerException("Activity resource not found");
     }
 
