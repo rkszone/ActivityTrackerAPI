@@ -5,6 +5,7 @@ import com.activity.tracker.model.ActivitySummaryData;
 import com.activity.tracker.model.FileUploadModel;
 import com.activity.tracker.model.PageActivity;
 import com.activity.tracker.service.IActivityService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +16,18 @@ import java.util.List;
 /**
  * Activity Controller has all activity resources
  */
+@Data
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("activitytracker")
 public class ActivityController {
 
     @Autowired
-    IActivityService activityService;
+    private IActivityService activityService;
+
+    ActivityController(IActivityService activityService) {
+        this.activityService = activityService;
+    }
 
     /**
      * Upload Multiple Files
