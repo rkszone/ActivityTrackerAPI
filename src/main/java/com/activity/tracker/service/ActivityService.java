@@ -7,6 +7,7 @@ import com.activity.tracker.model.*;
 import com.activity.tracker.repository.IActivityRepository;
 import com.activity.tracker.repository.IRecordRepository;
 import com.activity.tracker.utils.CsvUtil;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,15 +23,21 @@ import java.util.stream.Collectors;
 /**
  * Service class for activity
  */
+@Data
 @Service
 @Slf4j
 public class ActivityService implements IActivityService {
 
     @Autowired
-    IRecordRepository recordRepository;
+    private IRecordRepository recordRepository;
 
     @Autowired
-    IActivityRepository activityRepository;
+    private IActivityRepository activityRepository;
+
+    public ActivityService (IActivityRepository activityRepository, IRecordRepository recordRepository) {
+        this.activityRepository = activityRepository;
+        this.recordRepository = recordRepository;
+    }
 
     /**
      * file Upload Models
@@ -51,9 +58,9 @@ public class ActivityService implements IActivityService {
                 fileUploadModels.add(fileUploadModel);
             } catch (Exception e) {
                 FileUploadModel fileUploadModel = new FileUploadModel();
-                fileUploadModel.setFileName(file.getName());
-                fileUploadModel.setFileType(file.getContentType());
-                fileUploadModel.setSize(file.getSize());
+                fileUploadModel.setFileName(file != null ? file.getName() : "");
+                fileUploadModel.setFileType(file != null ? file.getContentType() : "");
+                fileUploadModel.setSize(file != null ? file.getSize() : 0);
                 fileUploadModel.setStatus("failed");
                 fileUploadModel.setErrorMessage(e.getLocalizedMessage());
                 fileUploadModels.add(fileUploadModel);
@@ -121,7 +128,7 @@ public class ActivityService implements IActivityService {
                     average().orElse(Double.NaN));
 
             long startTime = optionalActivity.get().getStartTime().getTime();
-            long endTime = Collections.max(optionalActivity.get().getRecordList(), Comparator.comparing(Record::getTime)).getTime().getTime();
+            long endTime = optionalActivity.get().getRecordList().size() > 0 ? Collections.max(optionalActivity.get().getRecordList(), Comparator.comparing(Record::getTime)).getTime().getTime() : 0;
             activitySummaryData.setTotalDuration(TimeUnit.MILLISECONDS.toMinutes(endTime - startTime));
 
             activitySummaryData.setTotalDistance((long) optionalActivity.get().getRecordList().
