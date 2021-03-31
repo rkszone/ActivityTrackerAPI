@@ -190,6 +190,20 @@ public class ActivityServiceTest {
     }
 
     @org.junit.Test
+    public void getActivitySummaryDataWithEmpty() {
+        Optional<Activity> optionalActivity = Optional.empty();
+        when(activityRepository.findById(any())).thenReturn(optionalActivity);
+        try {
+            activityService.getActivitySummaryData(1);
+            verify(activityRepository).findById(any());
+            verify(activityRepository,atLeastOnce()).findById(any());
+        } catch (NoSuchElementException exception) {
+
+        }
+
+    }
+
+    @org.junit.Test
     public void deleteById() {
         activityService.deleteById(Long.valueOf(1));
         try {

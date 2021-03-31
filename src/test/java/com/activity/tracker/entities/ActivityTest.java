@@ -71,12 +71,9 @@ class ActivityTest {
         Assert.assertEquals("Activity(id=0, activityDef=null, name=null, activityType=null, startTime=null, created=null, is_deleted=false, recordList=[])",activity.toString());
     }
 
-    @Ignore
+    @Test
     void equalsSuperClass() {
-        EqualsVerifier.forClass(Activity.class)
-                .suppress(Warning.NONFINAL_FIELDS)
-                .suppress(Warning.STRICT_INHERITANCE)
-                .withRedefinedSuperclass()
-                .verify();
+        Assert.assertTrue(activity.equals(new Activity()));
+        Assert.assertNotNull(activity.hashCode());
     }
 }

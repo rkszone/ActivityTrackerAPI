@@ -75,12 +75,9 @@ class RecordTest {
         Assert.assertEquals("Record(id=0, recordDef=null, time=null, distance=0, power=0, cadence=0, created=null, is_deleted=false)", record.toString());
     }
 
-    @Ignore
+    @Test
     void equalsSuperClass() {
-        EqualsVerifier.forClass(Record.class)
-                .suppress(Warning.NONFINAL_FIELDS)
-                .suppress(Warning.STRICT_INHERITANCE)
-                .withRedefinedSuperclass()
-                .verify();
+        Assert.assertTrue(record.equals(new Record()));
+        Assert.assertNotNull(record.hashCode());
     }
 }
